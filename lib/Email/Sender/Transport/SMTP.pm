@@ -69,6 +69,17 @@ has helo      => (is => 'ro', isa => 'Str');
 has localaddr => (is => 'ro');
 has localport => (is => 'ro', isa => 'Int');
 
+=item C<SSL_verify_mode>: passed as option to IO::Socket::SSL
+
+=item C<SSL_ca_file>: passed as option to IO::Socket::SSL
+
+=back
+
+=cut
+
+has SSL_verify_mode => (is => 'ro', isa => 'Str');
+has SSL_ca_file     => (is => 'ro', isa => 'Str');
+
 # I am basically -sure- that this is wrong, but sending hundreds of millions of
 # messages has shown that it is right enough.  I will try to make it textbook
 # later. -- rjbs, 2008-12-05
@@ -124,6 +135,8 @@ sub _net_smtp_args {
     defined $self->helo      ? (Hello     => $self->helo)      : (),
     defined $self->localaddr ? (LocalAddr => $self->localaddr) : (),
     defined $self->localport ? (LocalPort => $self->localport) : (),
+    defined $self->SSL_verify_mode ? (SSL_verify_mode => $self->SSL_verify_mode) : (),
+    defined $self->SSL_ca_file ? (SSL_ca_file => $self->SSL_ca_file) : (),
   );
 }
 
